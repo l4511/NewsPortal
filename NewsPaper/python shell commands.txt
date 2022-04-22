@@ -1,0 +1,61 @@
+>>> from news.models import *
+>>> Alexander = User.objects.create_user('Alexander')
+>>> Maria = User.objects.create_user('Maria')
+>>> Alen = User.objects.create_user('Alen')   
+>>> Mark = User.objects.create_user('Mark') 
+>>> a1 = Author.objects.create(author = Alexander) 
+>>> a2 = Author.objects.create(author = Maria)
+>>> cat1 = Category.objects.create(category = 'Авиация и космос')
+>>> cat2 = Category.objects.create(category = 'Новости туризма')  
+>>> cat3 = Category.objects.create(category = 'Мир Айти')        
+>>> cat4 = Category.objects.create(category = 'Фриланс') 
+>>> post1 = Post.objects.create(post_author = a1, post_type = Post.article, post_title = 'Туризм и авиация нужны друг другу', post_text = 'За последние 60 лет туризм 
+развивался беспрецедентными темпами: если в 1950 году число туристов составляло 50 млн. человек, то в 2012 году по миру путешествовал уже миллиард туристов.') 
+>>> post2 = Post.objects.create(post_author = a1, post_type = Post.article, post_title = 'Как IT-специалисту стать фрилансером', post_text = 'Фриланс-биржа FL.ru помогает найти удаленную работу программистам, дизайнерам, копирайтерам, SEO-оптимизаторам, маркетологам.') 
+>>> post3 = Post.objects.create(post_author = a2, post_type = Post.new, post_title = 'Новая вакансия', post_text = 'Компания "Al-Hameed" начала новый набор сотрудников.Требуются специалисты айти,с обязательным знанием английского языка и желательным знанием арабского языка.')
+>>> post1.post_category.add(cat1) 
+>>> post1.post_category.add(cat2) 
+>>> post2.post_category.add(cat3) 
+>>> post2.post_category.add(cat4) 
+>>> post3.post_category.add(cat2)
+>>> c1 = Comment.objects.create(comment_post = post1, comment_user = Alen, comment_text = 'Интересно,а сколько в 2022? И каковы перспективы?') 
+>>> c2 = Comment.objects.create(comment_post = post2, comment_user = Mark, comment_text = 'Надо попробовать,вдруг получится.')
+>>> c3 = Comment.objects.create(comment_post = post2, comment_user = Alexander, comment_text = 'Попробуйте,айти специалисты всегда нужны.')
+>>> c4 = Comment.objects.create(comment_post = post3, comment_user = Maria, comment_text = 'Отзывайтесь,приходите на собеседования.')
+>>> c5 = Comment.objects.create(comment_post = post3, comment_user = Mark, comment_text = 'Не, лучше в айти и фриланс.')
+>>> c1.like()
+>>> c2.like() 
+>>> c3.like() 
+>>> c3.like()
+>>> c4.like() 
+>>> c4.dislike() 
+>>> c5.dislike() 
+>>> post1.like()
+>>> post1.like()
+>>> post1.like()
+>>> post1.like()
+>>> post2.like() 
+>>> post2.like()
+>>> post2.like()
+>>> post3.like() 
+>>> post3.like()
+>>> post3.like()
+>>> post3.like()
+>>> post3.like()
+>>> post3.like()
+>>> post3.dislike() 
+>>> post3.dislike()
+>>> Author.objects.get(pk=1).update_rating()
+>>> Author.objects.get(pk=2).update_rating() 
+>>> Author.objects.filter().order_by('-author_rating').values('author__username', 'author_rating')[0]
+>>> bestpost = Post.objects.filter(post_type='AR').order_by('-post_rating') 
+>>> bestpost.values('post_time_create', 'post_author__author__username', 'post_rating', 'post_title')[0] 
+>>> bestpost[0].preview() 
+>>> bestpost.values('comment__comment_time_create', 'comment__comment_user__username','comment__comment_rating', 'comment__comment_text')[0]
+
+
+
+
+
+
+
